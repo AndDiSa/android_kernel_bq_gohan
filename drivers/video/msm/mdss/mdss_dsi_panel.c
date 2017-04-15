@@ -634,7 +634,9 @@ static void mdss_dsi_panel_switch_mode(struct mdss_panel_data *pdata,
 
 	mdss_dsi_panel_cmds_send(ctrl_pdata, pcmds, flags);
 }
+#if defined(CONFIG_BACKLIGHT_LM3697)
 extern int lm3697_mdss_backlight_set(u32 level);
+#endif
 static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 							u32 bl_level)
 {
@@ -671,7 +673,9 @@ static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 	case BL_PWM:
 		//temp = bl_level > 0 ? pdata->panel_info.bl_max : bl_level;
 		mdss_dsi_panel_bklt_pwm(ctrl_pdata, bl_level);
+#if defined(CONFIG_BACKLIGHT_LM3697)
 		lm3697_mdss_backlight_set(bl_level);
+#endif
 		break;
 	case BL_DCS_CMD:
 		if (!mdss_dsi_sync_wait_enable(ctrl_pdata)) {
